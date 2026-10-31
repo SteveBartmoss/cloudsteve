@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 
-import usersRoutes from './modules/users/users.routes.js';
+import usersRoutes from './modules/users/users.routes';
 
 export function buildApp() {
   const app = Fastify({
