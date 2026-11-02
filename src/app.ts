@@ -1,19 +1,18 @@
 import Fastify from 'fastify';
+import multipart from '@fastify/multipart';
 
-import usersRoutes from './modules/users/users.routes';
+import usersRoutes from './modules/users/users.routes.js';
 
 export function buildApp() {
   const app = Fastify({
-    logger: {
-      level: process.env.LOG_LEVEL ?? 'info',
-    },
+    logger: true,
   });
 
-  app.get('/health', async () => {
-    return {
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-    };
+  app.register(multipart, {
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10 MB
+      files: 5,
+    },
   });
 
   app.register(usersRoutes, {
